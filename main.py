@@ -73,8 +73,10 @@ def how_many_find_ans(row):
 
 from preprocessing import split_file,qtype_explore
 Qtype = ['what','where','when','who','why','how many','how much']
-#df = pd.read_csv('split/who',sep ='\t',nrows=10)
-df = pd.read_csv('data/train_serial.tsv',sep ='\t',nrows=1000)
+split_file(Qtype,'data/train_serial.tsv')
+
+# Only the result for how many or who type of questions are shown here.  
+df = pd.read_csv('split/who',sep ='\t',nrows=10)
 N = len(df)
 N_hm = 0
 i = 0
@@ -84,6 +86,7 @@ for index, row in df.iterrows():
         print "i=",i
     i=i+1
     [ques,pas,ans] = [row['Question'],row['Passage'],row['Answer']]
+    # for developing phase, you can change who_find_ans to how_many_find_ans to see the result for how_many questions
     ans_find = who_find_ans(row)
     if ans_find and ans_find in ans:
         N_hm = N_hm +1
